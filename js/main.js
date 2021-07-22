@@ -1,4 +1,4 @@
-
+//firts commit
 const sprites = new Image();
 sprites.src ="img/bola.png";
 
