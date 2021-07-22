@@ -2,6 +2,9 @@
 const sprites = new Image();
 sprites.src ="img/bola.png";
 
+const border = new Image();
+border.src = "img/bordas.png"
+
 const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
 
@@ -13,8 +16,8 @@ const context = canvas.getContext('2d')
     weightfromAtom: 700,
     x: 50,
     y: 50,
-    w: 200,
-    h: 200,
+    w: 500,
+    h: 500,
 
     drawtheAtom() {
 
@@ -25,6 +28,47 @@ const context = canvas.getContext('2d')
         Atomform.w, Atomform.h,
       );
 
+
+    }
+  }
+
+  const movieborders = {
+    sourcebX: 0,
+    sourcebY: 0,
+
+    sourcebXdown: 320,
+    sourcebYdown: 480,
+
+    heightfromborder: 240,
+    weightfromborder: 2648,
+    x: -105,
+    y: -24,
+    w: 441,
+    h: 40,
+    variablex: 0,
+
+    drawtheborder() {
+
+      if(movieborders.x<=0){
+      movieborders.variablex = movieborders.x++;
+      }
+
+      if(movieborders.x>0){
+        movieborders.x = -105
+      }
+        context.drawImage(
+          border, movieborders.sourcebX, movieborders.sourcebY,
+          movieborders.weightfromborder, movieborders.heightfromborder,
+          movieborders.variablex, movieborders.y,
+          movieborders.w, movieborders.h,
+        );
+
+      context.drawImage(
+        border, movieborders.sourcebX, movieborders.sourcebY,
+        movieborders.weightfromborder, movieborders.heightfromborder,
+        movieborders.variablex, 472,
+        movieborders.w, movieborders.h,
+      );
 
     }
   }
@@ -61,6 +105,7 @@ const context = canvas.getContext('2d')
 
   function loop (){
     context.clearRect(0,0, canvas.height,canvas.width)
+    movieborders.drawtheborder()
     Atomform.drawtheAtom()
     requestAnimationFrame(loop)
   }
