@@ -37,6 +37,9 @@ html {
   text-shadow: none;
 }
 
+.tt{
+  border: white 2px;
+}
 /*
  * A better looking default horizontal rule
  */

@@ -18,6 +18,7 @@ const context = canvas.getContext('2d')
     y: 50,
     w: 500,
     h: 500,
+    fast: 2,
 
     drawtheAtom() {
 
@@ -77,36 +78,84 @@ const context = canvas.getContext('2d')
   UP: 40,
   DOWN: 38,
   LEFT: 37,
-  RIGHT: 39
+  RIGHT: 39,
+  toUP: false,
+  toDOWN: false,
+  toLEFT: false,
+  toRIGHT: false
   }
 
   window.addEventListener("keydown", keydownHandler);
-
+  window.addEventListener("keyup", keyupHandler);
   function keydownHandler (e){
     const key = e.keyCode;
-    if(key === keys.LEFT){
-
-      Atomform.x--;
+    let i =0;
+    if(key === keys.LEFT && key!== keys.RIGHT){
+        keys.toLEFT = true;
     }
-    if(key === keys.RIGHT) {
-
-      Atomform.x++;
+    if(key === keys.RIGHT && key!== keys.LEFT) {
+      keys.toRIGHT = true;
     }
-    if(key === keys.UP){
-
-      Atomform.y++;
+    if(key === keys.UP && key!== keys.DOWN){
+      keys.toUP = true;
     }
-    if(key === keys.DOWN){
-
-      Atomform.y--;
+    if(key === keys.DOWN && key!== keys.UP){
+      keys.toDOWN = true;
     }
-
+    }
+function keyupHandler (e){
+  const key = e.keyCode;
+  let i =0;
+  if(key === keys.LEFT && key!== keys.RIGHT){
+    keys.toLEFT = false;
   }
+  if(key === keys.RIGHT && key!== keys.LEFT) {
+    keys.toRIGHT = false;
+  }
+  if(key === keys.UP && key!== keys.DOWN){
+    keys.toUP = false;
+  }
+  if(key === keys.DOWN && key!== keys.UP){
+    keys.toDOWN = false;
+  }
+}
+
+
+    function move () {
+      let i = 0;
+      if (keys.toLEFT) {
+        do {
+          i++;
+          Atomform.x--;
+        } while (i < Atomform.fast)
+      }
+      if (keys.toRIGHT) {
+        do {
+          i++;
+          Atomform.x++;
+        } while (i < Atomform.fast)
+      }
+      if (keys.toUP) {
+        do {
+          i++;
+          Atomform.y++;
+        } while (i < Atomform.fast)
+      }
+      if (keys.toDOWN) {
+        do {
+          i++;
+          Atomform.y--;
+        } while (i < Atomform.fast)
+      }
+    }
+
+
 
   function loop (){
-    context.clearRect(0,0, canvas.height,canvas.width)
+    context.clearRect(0,0, canvas.width,canvas.height)
     movieborders.drawtheborder()
     Atomform.drawtheAtom()
+    move()
     requestAnimationFrame(loop)
   }
   loop();
