@@ -158,5 +158,10 @@ function keyupHandler (e){
     move()
     requestAnimationFrame(loop)
   }
-  loop();
+
+    loop();
+
+
+
+
 
