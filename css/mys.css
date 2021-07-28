@@ -7,21 +7,15 @@
 }
 .text{
   text-align: center;
-  color: white;
+  color: black;
   font-style: normal;
-  font-size: 34px;
+  font-size: 16px;
   margin: 0;
   padding: 0;
-  font-family: "inversion";
+  font-family: "Aldo the Apache";
 }
 #table tr td{
   background: black;
   padding-right: 150px;
   padding-left: 150px;
-  font-family: inversion;
-}
-@font-face {
-  font-family: inversion;
-  src: local(inversion), url(font/Inversionz.ttf);
-  font-weight: normal;font-style: normal;
 }

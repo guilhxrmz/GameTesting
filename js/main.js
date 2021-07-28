@@ -5,10 +5,13 @@ sprites.src ="img/bola.png";
 const border = new Image();
 border.src = "img/bordas.png"
 
+const logopause = new Image();
+logopause.src = "img/PAUSE.png"
+
 const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
 
-
+//Atom e formas a serem desenhadas
   const Atomform = {
     sourceX: 0,
     sourceY: 0,
@@ -32,7 +35,6 @@ const context = canvas.getContext('2d')
 
     }
   }
-
   const movieborders = {
     sourcebX: 0,
     sourcebY: 0,
@@ -74,7 +76,33 @@ const context = canvas.getContext('2d')
     }
   }
 
+  const PauseLogo ={
+    sourceX: 0,
+    sourceY: 0,
+    heightfrompause: 400,
+    weightfrompause: 400,
+    x: 140,
+    y: 200,
+    w: 100,
+    h: 100,
+
+    drawthePause() {
+
+      context.drawImage(
+        logopause, PauseLogo.sourceX, PauseLogo.sourceY,
+        PauseLogo.weightfrompause, PauseLogo.heightfrompause,
+        PauseLogo.x, PauseLogo.y,
+        PauseLogo.w, PauseLogo.h,
+      );
+
+
+    }
+  }
+//Termina aqui
+
+//movimentações e confifuração de movimentações
   const keys ={
+  SPACE: 32,
   UP: 40,
   DOWN: 38,
   LEFT: 37,
@@ -84,11 +112,11 @@ const context = canvas.getContext('2d')
   toLEFT: false,
   toRIGHT: false
   }
-
   window.addEventListener("keydown", keydownHandler);
   window.addEventListener("keyup", keyupHandler);
   function keydownHandler (e){
     const key = e.keyCode;
+
     let i =0;
     if(key === keys.LEFT && key!== keys.RIGHT){
         keys.toLEFT = true;
@@ -102,8 +130,13 @@ const context = canvas.getContext('2d')
     if(key === keys.DOWN && key!== keys.UP){
       keys.toDOWN = true;
     }
+
+    if(key === keys.SPACE){
+      activeScreen.click()
     }
-function keyupHandler (e){
+
+    }
+  function keyupHandler (e){
   const key = e.keyCode;
   let i =0;
   if(key === keys.LEFT && key!== keys.RIGHT){
@@ -119,9 +152,7 @@ function keyupHandler (e){
     keys.toDOWN = false;
   }
 }
-
-
-    function move () {
+  function move () {
       let i = 0;
       if (keys.toLEFT) {
         do {
@@ -148,17 +179,61 @@ function keyupHandler (e){
         } while (i < Atomform.fast)
       }
     }
+//Termina aqui
 
-
-
-  function loop (){
-    context.clearRect(0,0, canvas.width,canvas.height)
-    movieborders.drawtheborder()
-    Atomform.drawtheAtom()
-    move()
-    requestAnimationFrame(loop)
+  let activeScreen = {};
+  function changeScreen(newScreen){
+    activeScreen = newScreen;
   }
 
+
+  const Screeen ={
+    Pause:{
+      Draw(){
+        context.clearRect(0,0, canvas.width,canvas.height)
+        movieborders.drawtheborder()
+        Atomform.drawtheAtom()
+        PauseLogo.drawthePause()
+      },
+      att(){
+
+      },
+      click(){
+        changeScreen(Screeen.Reproduce)
+      }
+
+    },
+
+    Reproduce:{
+      Draw(){
+        context.clearRect(0,0, canvas.width,canvas.height)
+        movieborders.drawtheborder()
+        Atomform.drawtheAtom()
+      },
+      att(){
+        move()
+      },
+      click(){
+        changeScreen(Screeen.Pause)
+      }
+    }
+
+  }
+  function loop (){
+
+    activeScreen.Draw();
+    activeScreen.att();
+    requestAnimationFrame(loop);
+  }
+/*
+    window.addEventListener('click', function (){
+      if(activeScreen.click){
+        activeScreen.click();
+      }
+
+    })*/
+
+    changeScreen(Screeen.Pause)
     loop();
 
 
