@@ -8,6 +8,9 @@ border.src = "img/bordas.png"
 const logopause = new Image();
 logopause.src = "img/PAUSE.png"
 
+const star = new Image();
+star.src = "img/estrelinha.png"
+
 const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
 
@@ -35,6 +38,31 @@ const context = canvas.getContext('2d')
 
     }
   }
+
+const Starform = {
+  sourceX: 0,
+  sourceY: 0,
+  heightfromstar: 400,
+  weightfromstar: 400,
+  x: Math.random()  * (400 - (-100)) + (-100),
+  y: Math.random() * (600 - (-100)) + (-100),
+  w: 20,
+  h: 20,
+  fast: 2,
+
+  drawthestar() {
+
+    context.drawImage(
+      star, Starform.sourceX, Starform.sourceY,
+      Starform.weightfromstar, Starform.heightfromstar,
+      Starform.x++, Starform.y++,
+      Starform.w, Starform.h,
+    );
+
+
+  }
+}
+
   const movieborders = {
     sourcebX: 0,
     sourcebY: 0,
@@ -100,7 +128,7 @@ const context = canvas.getContext('2d')
   }
 //Termina aqui
 
-//movimentações e confifuração de movimentações
+//movimentações e configuração de movimentações
   const keys ={
   SPACE: 32,
   UP: 40,
@@ -181,6 +209,7 @@ const context = canvas.getContext('2d')
     }
 //Termina aqui
 
+//configurações de tela
   let activeScreen = {};
   function changeScreen(newScreen){
     activeScreen = newScreen;
@@ -194,6 +223,7 @@ const context = canvas.getContext('2d')
         movieborders.drawtheborder()
         Atomform.drawtheAtom()
         PauseLogo.drawthePause()
+        Starform.drawthestar()
       },
       att(){
 
@@ -209,6 +239,7 @@ const context = canvas.getContext('2d')
         context.clearRect(0,0, canvas.width,canvas.height)
         movieborders.drawtheborder()
         Atomform.drawtheAtom()
+        Starform.drawthestar()
       },
       att(){
         move()
@@ -233,7 +264,7 @@ const context = canvas.getContext('2d')
 
     })*/
 
-    changeScreen(Screeen.Pause)
+    changeScreen(Screeen.Reproduce)
     loop();
 
 
