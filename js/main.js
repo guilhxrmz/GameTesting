@@ -44,18 +44,25 @@ const Starform = {
   sourceY: 0,
   heightfromstar: 400,
   weightfromstar: 400,
-  x: Math.random()  * (400 - (-100)) + (-100),
-  y: Math.random() * (600 - (-100)) + (-100),
+  x: Math.floor(Math.random() * 320 + 1),
+  y: Math.floor(Math.random() * 500 + 1),
+  fast: 1,
+  maxmov: this.x+this.fast,
+  minmov: this.x-this.fast,
+  xmov: Math.floor(Math.random() * this.maxmov + this.minmov),
+  ymov: Math.random() * ((this.y + this.fast)-(this.y-this.fast)) + (this.y-this.fast),
+
   w: 20,
   h: 20,
-  fast: 2,
+
 
   drawthestar() {
 
     context.drawImage(
       star, Starform.sourceX, Starform.sourceY,
       Starform.weightfromstar, Starform.heightfromstar,
-      Starform.x++, Starform.y++,
+      Math.floor(Math.random() * (Starform.x+Starform.fast) + Starform.x-Starform.fast),
+      Math.floor(Math.random() * (Starform.y+Starform.fast) + Starform.y-Starform.fast),
       Starform.w, Starform.h,
     );
 
